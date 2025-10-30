@@ -1,10 +1,9 @@
-// src/pages/Favorites.jsx
-// Lista todos los favoritos guardados en el store global.
-// No pasamos "type" a EntityList, porque cada favorito ya lo trae.
+// Página de favoritos
 
 import { useStore } from "../context/StoreContext";
 import EntityList from "../components/EntityList";
 
+// Función de favoritos
 export default function Favorites() {
   const { state } = useStore();
 

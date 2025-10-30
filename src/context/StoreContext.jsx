@@ -1,29 +1,19 @@
-// src/context/StoreContext.jsx
-// Estado global mínimo de la app usando Context + useReducer.
-// Solo gestionamos "favorites" para mantenerlo simple y escalable.
-
+// Context para compartir el estado global en toda la app
 import React, { createContext, useReducer, useContext } from "react";
 
-// 1) Creamos el contexto para compartir { state, dispatch } en toda la app.
+// Crea el Context
 const StoreContext = createContext();
 
-// 2) Estado inicial — colección de favoritos vacía.
+// Estado para favoritos
 const initialState = { favorites: [] };
 
-/**
- * 3) Reducer inmutable y predecible:
- *    - ADD_FAV    -> añade { uid, name, type } si NO existe ya (clave compuesta)
- *    - REMOVE_FAV -> elimina por (uid && type)
- *
- *   Nota: Usamos (uid, type) porque SWAPI repite uids en distintas colecciones,
- *   p.ej. people:1 y planets:1; así evitamos “marcar” otras tarjetas por error.
- */
+// Función reducer para manejar las acciones
 function reducer(state, action) {
   switch (action.type) {
     case "ADD_FAV": {
       const { uid, type } = action.payload;
       const exists = state.favorites.some((f) => f.uid === uid && f.type === type);
-      if (exists) return state; // prevenimos duplicados
+      if (exists) return state; 
       return { ...state, favorites: [...state.favorites, action.payload] };
     }
     case "REMOVE_FAV": {
@@ -38,13 +28,12 @@ function reducer(state, action) {
   }
 }
 
-// 4) Provider: engancha el reducer y expone { state, dispatch }.
+// Función para envolver toda la app con el StoreProvider
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   return <StoreContext.Provider value={{ state, dispatch }}>{children}</StoreContext.Provider>;
 }
 
-// 5) Hook de conveniencia para consumir el contexto.
 export function useStore() {
   return useContext(StoreContext);
 }

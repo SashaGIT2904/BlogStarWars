@@ -1,5 +1,4 @@
-// src/components/Navbar.jsx
-// Barra de navegación con link a Home y a Favoritos (con contador).
+// Componente de navbar
 
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -14,7 +13,7 @@ export default function AppNavbar() {
         {/* Link a Home */}
         <Navbar.Brand as={Link} to="/">SW Blog</Navbar.Brand>
 
-        {/* Link a Favoritos con contador */}
+        {/* Link a Favoritos */}
         <Nav>
           <Nav.Link as={Link} to="/favorites">
             Favoritos{" "}
